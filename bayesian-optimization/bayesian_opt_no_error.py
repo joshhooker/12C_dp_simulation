@@ -35,7 +35,7 @@ def run_bayesian_optimization():
 
     # n_iter: How many steps of bayesian optimization you want to perform
     # init_points: How many steps of random exploration you want to perform
-    optimizer.maximize(init_points=60, n_iter=400)
+    optimizer.maximize(init_points=40, n_iter=40)
 
     for i, res in enumerate(optimizer.res):
         print("Iteration {}: \n\t{}".format(i, res))

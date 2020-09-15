@@ -76,10 +76,10 @@ def analysis(input_file, output_file):
     simG.SetTitle(r'')
     simG.Draw('psame')
 
-    # text = TLatex(2, 35, 'MSE = ' + '{0:.2f}'.format(mse));
-    # text.SetTextColor(1)
-    # text.SetTextSize(0.04)
-    # text.Draw()
+    text = TLatex(2, 35, 'MSE = ' + '{0:.2f}'.format(mse));
+    text.SetTextColor(1)
+    text.SetTextSize(0.04)
+    text.Draw()
 
     input_tfile.Close()
 
