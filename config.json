@@ -1,0 +1,17 @@
+{
+  "interactive"      : false,
+  "macroName"        : "run.mac",
+  "outputFile"       : "sim",
+  "beamIon[Z,A]"     : [6, 12],
+  "targetIon[Z,A]"   : [1, 2],
+  "ejectileIon[Z,A]" : [1, 1],
+  "beamEnergy"       : 111.22,
+  "beamOffset"       : [0.0, 0.0],
+  "targetThickness"  : 43.0,
+  "yuEnergyFWHM"     : 0.035,
+  "yuThreshold"      : 0.2,
+  "use13BeStates"    : false,
+  "stateEnergyFWHM"  : 0.1,
+  "backgroundAmount" : 0.725,
+  "energyQvalue"     : false
+}

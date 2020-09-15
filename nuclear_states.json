@@ -1,0 +1,14 @@
+{
+    "Isotopes": [
+        {
+            "Name": "13C",
+            "ZA": [6, 13],
+            "States": [
+                {"Energy": 0.000, "Probability": 0.4},
+                {"Energy": 3.089, "Probability": 0.4},
+                {"Energy": 3.685, "Probability": 1.0},
+                {"Energy": 3.854, "Probability": 1.0}
+            ]
+        }
+    ]
+}
