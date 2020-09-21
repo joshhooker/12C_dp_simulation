@@ -22,7 +22,10 @@ def run_bayesian_optimization():
     file.write('Ex1 Energy; Ex1 Prob; Ex2 Energy; Ex2 Prob; Ex3 Energy; Ex3 Prob; Ex4 Energy; Ex4 Prob; MSE; Chi2; Score\n')
     file.close()
 
-    os.rmdir('output')
+    try:
+        os.rmdir('output')
+    except:
+        pass
     if not os.path.exists('output'):
         os.makedirs('output')
 
@@ -42,6 +45,8 @@ def run_bayesian_optimization():
     # n_iter: How many steps of bayesian optimization you want to perform
     # init_points: How many steps of random exploration you want to perform
     optimizer.maximize(init_points=80, n_iter=80)
+
+    print(optimizer.max)
 
     return optimizer.max, len(pbounds)
 
@@ -128,7 +133,7 @@ def make_json_file(ex1, p_ex1, ex2, p_ex2, ex3, p_ex3, ex4, p_ex4):
     with open('nuclear_states.json', 'w') as nuclear_file:
         json.dump(nuclear_data, nuclear_file, indent=4)
 
-def find_bounds(parameters, number, base_chi2, only_positive=False):
+def find_bounds(parameters, number, base_chi2):
     parameters_ = parameters
     param_value = parameters[number]
     print(base_chi2, len(parameters))
@@ -139,31 +144,32 @@ def find_bounds(parameters, number, base_chi2, only_positive=False):
     param_array.append(param_value)
     chi2_array.append(base_chi2)
 
-    if not only_positive:
-        current_chi2 = base_chi2
-        count = 1
-        while current_chi2 - base_chi2 < 2:
-            current_param = param_value - count*0.04
-            parameters_[number] = current_param
-            make_json_file(parameters_[0], parameters_[1], parameters_[2], parameters_[3], 
-                        parameters_[4], parameters_[5], parameters_[6], parameters_[7])
-            cmd = '../build/sim config.json -t 10'
-            os.system(cmd)
-            mse, chi2 = analysis('sim.root', 'output.root', len(parameters))
-            param_array.append(current_param)
-            chi2_array.append(chi2)
-            print(current_param, chi2)
-            current_chi2 = chi2
-            if current_chi2 - base_chi2 > 2:
-                break
-            count = count + 1
+    current_chi2 = base_chi2
+    count = 1
+    while current_chi2 - base_chi2 < 2:
+        current_param = param_value - count*0.04
+        if current_param < 0:
+            break
+        parameters_[number] = current_param
+        make_json_file(parameters_[0], parameters_[1], parameters_[2], parameters_[3],
+                       parameters_[4], parameters_[5], parameters_[6], parameters_[7])
+        cmd = '../build/sim config.json -t 10'
+        os.system(cmd)
+        mse, chi2 = analysis('sim.root', 'output.root', len(parameters))
+        param_array.append(current_param)
+        chi2_array.append(chi2)
+        print(current_param, chi2)
+        current_chi2 = chi2
+        if current_chi2 - base_chi2 > 2:
+            break
+        count = count + 1
 
     current_chi2 = base_chi2
     count = 1
     while current_chi2 - base_chi2 < 2:
         current_param = param_value + count*0.04
         parameters_[number] = current_param
-        make_json_file(parameters_[0], parameters_[1], parameters_[2], parameters_[3], 
+        make_json_file(parameters_[0], parameters_[1], parameters_[2], parameters_[3],
                        parameters_[4], parameters_[5], parameters_[6], parameters_[7])
         cmd = '../build/sim config.json -t 10'
         os.system(cmd)
