@@ -21,7 +21,7 @@ def run_bayesian_optimization():
     file.close()
 
     # Bounds for states
-    pbounds = {'p_ex1': (0., 1.), 'p_ex2': (0., 1.), 'p_ex3': (0., 1.), 'p_ex4': (0., 1.)}
+    pbounds = {'ex1': (0., 4.), 'p_ex1': (0., 1.), 'ex2': (0., 4.), 'p_ex2': (0., 1.), 'ex3': (0., 4.), 'p_ex3': (0., 1.), 'ex4': (0., 4.), 'p_ex4': (0., 1.)}
 
     # Bayesian Optimizer
     # Verbose = 0: Silent
@@ -35,22 +35,22 @@ def run_bayesian_optimization():
 
     # n_iter: How many steps of bayesian optimization you want to perform
     # init_points: How many steps of random exploration you want to perform
-    optimizer.maximize(init_points=60, n_iter=60)
+    optimizer.maximize(init_points=80, n_iter=80)
 
     for i, res in enumerate(optimizer.res):
         print("Iteration {}: \n\t{}".format(i, res))
 
     print(optimizer.max)
 
-def black_box(p_ex1, p_ex2, p_ex3, p_ex4):
-    score = run_simulation(p_ex1, p_ex2, p_ex3, p_ex4)
+def black_box(ex1, p_ex1, ex2, p_ex2, ex3, p_ex3, ex4, p_ex4):
+    score = run_simulation(ex1, p_ex1, ex2, p_ex2, ex3, p_ex3, ex4, p_ex4)
     return score
 
-def run_simulation(p_ex1, p_ex2, p_ex3, p_ex4):
+def run_simulation(ex1, p_ex1, ex2, p_ex2, ex3, p_ex3, ex4, p_ex4):
     global counter
     file = open('output_raw.log', 'a+')
 
-    make_json_file(p_ex1, p_ex2, p_ex3, p_ex4)
+    make_json_file(ex1, p_ex1, ex2, p_ex2, ex3, p_ex3, ex4, p_ex4)
 
     cmd = '../build/sim config.json -t 10'
     os.system(cmd)
@@ -74,14 +74,14 @@ def run_simulation(p_ex1, p_ex2, p_ex3, p_ex4):
     except:
         pass
 
-    file.write('%s %s %s %s %s %s\n' % (p_ex1, p_ex2, p_ex3, p_ex4, mse, score))
+    file.write('%s %s %s %s %s %s %s %s %s %s\n' % (ex1, p_ex1, ex2, p_ex2, ex3, p_ex3, ex4, p_ex4, mse, score))
     file.close()
 
     counter += 1
 
     return score
 
-def make_json_file(p_ex1, p_ex2, p_ex3, p_ex4):
+def make_json_file(ex1, p_ex1, ex2, p_ex2, ex3, p_ex3, ex4, p_ex4):
     try:
         os.remove('config.json')
         os.remove('nuclear_states.json')
@@ -114,10 +114,10 @@ def make_json_file(p_ex1, p_ex2, p_ex3, p_ex4):
             "Name": "13C",
             "ZA": [6, 13],
             "States": [
-                {"Energy": 0.000, "Probability": p_ex1},
-                {"Energy": 3.089, "Probability": p_ex2},
-                {"Energy": 3.685, "Probability": p_ex3},
-                {"Energy": 3.854, "Probability": p_ex4}
+                {"Energy": ex1, "Probability": p_ex1},
+                {"Energy": ex2, "Probability": p_ex2},
+                {"Energy": ex3, "Probability": p_ex3},
+                {"Energy": ex4, "Probability": p_ex4}
             ]
         }
     ]
