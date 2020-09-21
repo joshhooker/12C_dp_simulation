@@ -2,7 +2,7 @@
 
 TrackingAction::TrackingAction(EventAction* eventAction)
     : event_action_(eventAction) {
-    name_ = "NonResonantBackground";
+    name_ = "BinaryReaction";
 }
 
 TrackingAction::~TrackingAction() = default;

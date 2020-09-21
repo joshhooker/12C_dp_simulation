@@ -369,7 +369,8 @@ uniform_angle_output BinaryReactionProcess::UniformCMAngle(uniform_angle_input i
     const G4Track& aTrack = input.aTrack;
     const G4Step& aStep   = input.aStep;
 
-    G4double cm_light_theta = M_PI*G4UniformRand()*radian;
+    // G4double cm_light_theta = M_PI*G4UniformRand()*radian;
+    G4double cm_light_theta = G4RandFlat::shoot(150.*deg, 175.*deg);
     G4double cm_light_phi   = 2.*M_PI*G4UniformRand()*radian;
 
     G4ThreeVector momentum_direction = aTrack.GetMomentumDirection();

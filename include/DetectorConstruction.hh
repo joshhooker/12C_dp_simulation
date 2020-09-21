@@ -61,6 +61,16 @@ private:
     G4LogicalVolume* yu_logical_[16];
     G4LogicalVolume* yd_logical_[16];
 
+    G4LogicalVolume* sd1_d1_al1_logical_;
+    G4LogicalVolume* sd1_d1_sio2_logical_;
+    G4LogicalVolume* sd1_d1_al2_logical_;
+    G4LogicalVolume* sd1_d1_b_logical_;
+    G4LogicalVolume* sd1_d2_p_logical_;
+    G4LogicalVolume* sd1_d2_al_logical_;
+
+    G4LogicalVolume* sd2_d2_p_logical_;
+    G4LogicalVolume* sd2_d2_al_logical_;
+
     G4LogicalVolume* sd1_logical_[24];
     G4LogicalVolume* sd2_logical_[24];
 

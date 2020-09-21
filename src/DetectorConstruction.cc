@@ -36,6 +36,18 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     // Carbon target
     G4Material* c_material = G4Material::GetMaterial("G4_C");
 
+    // Aluminum
+    G4Material* al_material = G4Material::GetMaterial("G4_Al");
+
+    // Silicon Dioxide
+    G4Material* sio2_material = G4Material::GetMaterial("G4_SILICON_DIOXIDE");
+
+    // Boron
+    G4Material* b_material = G4Material::GetMaterial("G4_B");
+
+    // Phosphorus
+    G4Material* p_material = G4Material::GetMaterial("G4_P");
+
     // Silver foil
     G4Material* ag_material = G4Material::GetMaterial("G4_Ag");
 
@@ -156,8 +168,55 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     G4double sd1_distance = 600.*mm;
     G4double sd1_thickness = 61.*um;
 
+    char sd1_d1_al1_name[256];
+    char sd1_d1_sio2_name[256];
+    char sd1_d1_al2_name[256];
+    char sd1_d1_b_name[256];
+    char sd1_d2_p_name[256];
+    char sd1_d2_al_name[256];
     char sd_name[256];
 
+    double sd1_d1_al1_thickness = 1.5*um;
+    double sd1_d1_sio2_thickness = 3.5*um;
+    double sd1_d1_al2_thickness = 0.3*um;
+    double sd1_d1_b_thickness = 0.5*um;
+    double sd1_d2_p_thickness = 0.5*um;
+    double sd1_d2_al_thickness = 0.3*um;
+
+    // Sd1 dead layers D1
+    sprintf(sd1_d1_al1_name, "sd1_d1_al1");
+    G4VSolid *sd1_d1_al1_solid = new G4Tubs(sd1_d1_al1_name, s3_inner_radius, s3_outer_radius, sd1_d1_al1_thickness/2., 0., 360.*deg);
+    sprintf(sd1_d1_al1_name, "sd1_d1_al1Logical");
+    sd1_d1_al1_logical_ = new G4LogicalVolume(sd1_d1_al1_solid, al_material, sd1_d1_al1_name);
+    sprintf(sd1_d1_al1_name, "sd1_d1_al1Physical");
+    new G4PVPlacement(0, G4ThreeVector(0., 0., sd1_distance - sd1_thickness/2. - sd1_d1_b_thickness - sd1_d1_al2_thickness - 
+        sd1_d1_sio2_thickness - sd1_d1_al1_thickness/2.), sd1_d1_al1_logical_, sd1_d1_al1_name, world_logical_, false, 0, check_overlaps);
+
+    sprintf(sd1_d1_sio2_name, "sd1_d1_sio2");
+    G4VSolid *sd1_d1_sio2_solid = new G4Tubs(sd1_d1_sio2_name, s3_inner_radius, s3_outer_radius, sd1_d1_sio2_thickness/2., 0., 360.*deg);
+    sprintf(sd1_d1_sio2_name, "sd1_d1_sio2Logical");
+    sd1_d1_sio2_logical_ = new G4LogicalVolume(sd1_d1_sio2_solid, sio2_material, sd1_d1_sio2_name);
+    sprintf(sd1_d1_sio2_name, "sd1_d1_sio2Physical");
+    new G4PVPlacement(0, G4ThreeVector(0., 0., sd1_distance - sd1_thickness/2. - sd1_d1_b_thickness - sd1_d1_al2_thickness - 
+        sd1_d1_sio2_thickness/2.), sd1_d1_sio2_logical_, sd1_d1_sio2_name, world_logical_, false, 0, check_overlaps);
+
+    sprintf(sd1_d1_al2_name, "sd1_d1_al2");
+    G4VSolid *sd1_d1_al2_solid = new G4Tubs(sd1_d1_al2_name, s3_inner_radius, s3_outer_radius, sd1_d1_al2_thickness/2., 0., 360.*deg);
+    sprintf(sd1_d1_al2_name, "sd1_d1_al2Logical");
+    sd1_d1_al2_logical_ = new G4LogicalVolume(sd1_d1_al2_solid, al_material, sd1_d1_al2_name);
+    sprintf(sd1_d1_al2_name, "sd1_d1_al2Physical");
+    new G4PVPlacement(0, G4ThreeVector(0., 0., sd1_distance - sd1_thickness/2. - sd1_d1_b_thickness - sd1_d1_al2_thickness/2.), 
+        sd1_d1_al2_logical_, sd1_d1_al2_name, world_logical_, false, 0, check_overlaps);
+
+    sprintf(sd1_d1_b_name, "sd1_d1_b");
+    G4VSolid *sd1_d1_b_solid = new G4Tubs(sd1_d1_b_name, s3_inner_radius, s3_outer_radius, sd1_d1_b_thickness/2., 0., 360.*deg);
+    sprintf(sd1_d1_b_name, "sd1_d1_bLogical");
+    sd1_d1_b_logical_ = new G4LogicalVolume(sd1_d1_b_solid, b_material, sd1_d1_b_name);
+    sprintf(sd1_d1_b_name, "sd1_d1_bPhysical");
+    new G4PVPlacement(0, G4ThreeVector(0., 0., sd1_distance - sd1_thickness/2. - sd1_d1_b_thickness/2.), 
+        sd1_d1_b_logical_, sd1_d1_b_name, world_logical_, false, 0, check_overlaps);
+
+    // Sd1 active Si layer
     for (G4int i = 0; i < 24; i++) {
         sprintf(sd_name, "sd1%d", i + 1);
         G4VSolid *sd_solid = new G4Tubs(sd_name, s3_inner_radius + i * s3_ring_width,
@@ -174,10 +233,51 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
         }
     }
 
+    // Sd1 dead layers D2
+    sprintf(sd1_d2_p_name, "sd1_d2_p");
+    G4VSolid *sd1_d2_p_solid = new G4Tubs(sd1_d2_p_name, s3_inner_radius, s3_outer_radius, sd1_d2_p_thickness/2., 0., 360.*deg);
+    sprintf(sd1_d2_p_name, "sd1_d2_pLogical");
+    sd1_d2_p_logical_ = new G4LogicalVolume(sd1_d2_p_solid, p_material, sd1_d2_p_name);
+    sprintf(sd1_d2_p_name, "sd1_d2_pPhysical");
+    new G4PVPlacement(0, G4ThreeVector(0., 0., sd1_distance + sd1_thickness/2. + sd1_d2_p_thickness/2.), 
+        sd1_d2_p_logical_, sd1_d2_p_name, world_logical_, false, 0, check_overlaps);
+
+    sprintf(sd1_d2_al_name, "sd1_d2_al");
+    G4VSolid *sd1_d2_al_solid = new G4Tubs(sd1_d2_al_name, s3_inner_radius, s3_outer_radius, sd1_d2_al_thickness/2., 0., 360.*deg);
+    sprintf(sd1_d2_al_name, "sd1_d2_alLogical");
+    sd1_d2_al_logical_ = new G4LogicalVolume(sd1_d2_al_solid, al_material, sd1_d2_al_name);
+    sprintf(sd1_d2_al_name, "sd1_d2_alPhysical");
+    new G4PVPlacement(0, G4ThreeVector(0., 0., sd1_distance + sd1_thickness/2. + sd1_d2_p_thickness + sd1_d2_al_thickness/2.), 
+        sd1_d2_al_logical_, sd1_d2_al_name, world_logical_, false, 0, check_overlaps);
+
     // Sd2
     G4double sd2_distance = 690.*mm;
     G4double sd2_thickness = 500.*um;
 
+    // Sd2 dead layers D2
+    char sd2_d2_p_name[256];
+    char sd2_d2_al_name[256];
+
+    double sd2_d2_p_thickness = 0.5*um;
+    double sd2_d2_al_thickness = 0.3*um;
+
+    sprintf(sd2_d2_al_name, "sd2_d2_al");
+    G4VSolid *sd2_d2_al_solid = new G4Tubs(sd2_d2_al_name, s3_inner_radius, s3_outer_radius, sd2_d2_al_thickness/2., 0., 360.*deg);
+    sprintf(sd2_d2_al_name, "sd2_d2_alLogical");
+    sd2_d2_al_logical_ = new G4LogicalVolume(sd2_d2_al_solid, al_material, sd2_d2_al_name);
+    sprintf(sd2_d2_al_name, "sd2_d2_alPhysical");
+    new G4PVPlacement(0, G4ThreeVector(0., 0., sd2_distance - sd2_thickness/2. - sd2_d2_p_thickness - sd2_d2_al_thickness/2.), 
+        sd2_d2_al_logical_, sd2_d2_al_name, world_logical_, false, 0, check_overlaps);
+
+    sprintf(sd2_d2_p_name, "sd2_d2_p");
+    G4VSolid *sd2_d2_p_solid = new G4Tubs(sd2_d2_p_name, s3_inner_radius, s3_outer_radius, sd2_d2_p_thickness/2., 0., 360.*deg);
+    sprintf(sd2_d2_p_name, "sd2_d2_pLogical");
+    sd2_d2_p_logical_ = new G4LogicalVolume(sd2_d2_p_solid, p_material, sd2_d2_p_name);
+    sprintf(sd2_d2_p_name, "sd2_d2_pPhysical");
+    new G4PVPlacement(0, G4ThreeVector(0., 0., sd2_distance - sd2_thickness/2. - sd1_d2_p_thickness/2.), 
+        sd2_d2_p_logical_, sd2_d2_p_name, world_logical_, false, 0, check_overlaps);
+
+    // Sd2 active Si layer
     for (G4int i = 0; i < 24; i++) {
         sprintf(sd_name, "sd2%d", i + 1);
         G4VSolid *sd_solid = new G4Tubs(sd_name, s3_inner_radius + i * s3_ring_width,
@@ -204,6 +304,10 @@ void DetectorConstruction::ConstructMaterials() {
     man->FindOrBuildMaterial("G4_C");
     man->FindOrBuildMaterial("G4_Si");
     man->FindOrBuildMaterial("G4_Ag");
+    man->FindOrBuildMaterial("G4_Al");
+    man->FindOrBuildMaterial("G4_P");
+    man->FindOrBuildMaterial("G4_B");
+    man->FindOrBuildMaterial("G4_SILICON_DIOXIDE");
 }
 
 void DetectorConstruction::ConstructSDandField() {

@@ -35,7 +35,7 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* g4Event) {
     particle_gun_->SetParticlePosition(G4ThreeVector(beam_x_pos, beam_y_pos, -50.0*cm));
     particle_gun_->SetParticleMomentumDirection(G4ThreeVector(0, 0, 1));
 
-    G4double sigma = kin_e*0.03;
+    G4double sigma = kin_e*0.0195;
     kin_e = G4RandGauss::shoot(kin_e, sigma/2.355);
     particle_gun_->SetParticleEnergy(kin_e);
 
