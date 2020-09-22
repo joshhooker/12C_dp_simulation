@@ -44,7 +44,7 @@ def run_bayesian_optimization():
 
     # Give it a hint
     optimizer.probe(
-        params=[0.0, 0.154, 3.089, 0.12, 3.6845, 0.25, 3.854, 0.476],
+        params={"ex1": 0.0, "p_ex1": 0.154, "ex2": 3.089, "p_ex2": 0.12, "ex3": 3.6845, "p_ex3": 0.25, "ex4": 3.854, "p_ex4": 0.476},
         lazy=True
     )
     optimizer.maximize(init_points=0, n_iter=0)
