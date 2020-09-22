@@ -47,18 +47,11 @@ def run_bayesian_optimization():
         params=[0.0, 0.154, 3.089, 0.12, 3.6845, 0.25, 3.854, 0.476],
         lazy=True
     )
-<<<<<<< HEAD
-
-    # n_iter: How many steps of bayesian optimization you want to perform
-    # init_points: How many steps of random exploration you want to perform
-    optimizer.maximize(init_points=150, n_iter=150)
-=======
     optimizer.maximize(init_points=0, n_iter=0)
 
     # n_iter: How many steps of bayesian optimization you want to perform
     # init_points: How many steps of random exploration you want to perform
     optimizer.maximize(init_points=100, n_iter=150)
->>>>>>> Added bayesopt hint
 
     print(optimizer.max)
 
