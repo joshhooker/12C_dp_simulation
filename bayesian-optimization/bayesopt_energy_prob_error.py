@@ -257,6 +257,78 @@ def find_parameter_errors(max_parameters, num_parameters):
         file_p_ex4.write('%s %s\n' % (p_ex4_energy[i], p_ex4_chi2[i]))
     file_p_ex4.close()
 
+def find_parameter_errors_fixed():
+    num_parameters = 8
+
+    ex1_best = 0.0
+    ex2_best = 3.565
+    ex3_best = 3.885
+    ex4_best = 3.825
+
+    p_ex1_best = 0.2699
+    p_ex2_best = 0.6542
+    p_ex3_best = 0.9627
+    p_ex4_best = 0.0622
+
+    parameters = [ex1_best, p_ex1_best, ex2_best, p_ex2_best, ex3_best, p_ex3_best, ex4_best, p_ex4_best]
+
+    # Get the base chi2
+    make_json_file(ex1_best, p_ex1_best, ex2_best, p_ex2_best, ex3_best, p_ex3_best, ex4_best, p_ex4_best)
+    cmd = '../build/sim config.json -t 10'
+    os.system(cmd)
+
+    base_mse, base_chi2 = analysis('sim.root', 'output.root', num_parameters)
+
+    ex1_energy, ex1_chi2 = find_bounds(parameters, 0, base_chi2)
+    ex2_energy, ex2_chi2 = find_bounds(parameters, 2, base_chi2)
+    ex3_energy, ex3_chi2 = find_bounds(parameters, 4, base_chi2)
+    ex4_energy, ex4_chi2 = find_bounds(parameters, 6, base_chi2)
+
+    p_ex1_energy, p_ex1_chi2 = find_bounds(parameters, 1, base_chi2)
+    p_ex2_energy, p_ex2_chi2 = find_bounds(parameters, 3, base_chi2)
+    p_ex3_energy, p_ex3_chi2 = find_bounds(parameters, 5, base_chi2)
+    p_ex4_energy, p_ex4_chi2 = find_bounds(parameters, 7, base_chi2)
+
+    file_ex1 = open('ex1_parameter_estimation.dat', "w+")
+    for i in range(len(ex1_energy)):
+        file_ex1.write('%s %s\n' % (ex1_energy[i], ex1_chi2[i]))
+    file_ex1.close()
+
+    file_ex2 = open('ex2_parameter_estimation.dat', "w+")
+    for i in range(len(ex2_energy)):
+        file_ex2.write('%s %s\n' % (ex2_energy[i], ex2_chi2[i]))
+    file_ex2.close()
+
+    file_ex3 = open('ex3_parameter_estimation.dat', "w+")
+    for i in range(len(ex3_energy)):
+        file_ex3.write('%s %s\n' % (ex3_energy[i], ex3_chi2[i]))
+    file_ex3.close()
+
+    file_ex4 = open('ex4_parameter_estimation.dat', "w+")
+    for i in range(len(ex4_energy)):
+        file_ex4.write('%s %s\n' % (ex4_energy[i], ex4_chi2[i]))
+    file_ex4.close()
+
+    file_p_ex1 = open('p_ex1_parameter_estimation.dat', "w+")
+    for i in range(len(p_ex1_energy)):
+        file_p_ex1.write('%s %s\n' % (p_ex1_energy[i], p_ex1_chi2[i]))
+    file_p_ex1.close()
+
+    file_p_ex2 = open('p_ex2_parameter_estimation.dat', "w+")
+    for i in range(len(p_ex2_energy)):
+        file_p_ex2.write('%s %s\n' % (p_ex2_energy[i], p_ex2_chi2[i]))
+    file_p_ex2.close()
+
+    file_p_ex3 = open('p_ex3_parameter_estimation.dat', "w+")
+    for i in range(len(p_ex3_energy)):
+        file_p_ex3.write('%s %s\n' % (p_ex3_energy[i], p_ex3_chi2[i]))
+    file_p_ex3.close()
+
+    file_p_ex4 = open('p_ex4_parameter_estimation.dat', "w+")
+    for i in range(len(p_ex4_energy)):
+        file_p_ex4.write('%s %s\n' % (p_ex4_energy[i], p_ex4_chi2[i]))
+    file_p_ex4.close()
+
 if __name__ == '__main__':
     max_parameters, num_parameters = run_bayesian_optimization()
     find_parameter_errors(max_parameters, num_parameters)
