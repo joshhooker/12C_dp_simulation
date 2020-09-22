@@ -330,5 +330,7 @@ def find_parameter_errors_fixed():
     file_p_ex4.close()
 
 if __name__ == '__main__':
-    max_parameters, num_parameters = run_bayesian_optimization()
-    find_parameter_errors(max_parameters, num_parameters)
+    #max_parameters, num_parameters = run_bayesian_optimization()
+    #find_parameter_errors(max_parameters, num_parameters)
+
+    find_parameter_errors_fixed()
