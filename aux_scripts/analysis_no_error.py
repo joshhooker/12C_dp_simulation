@@ -17,6 +17,7 @@ def chisq(obs, sim, error, num_parameters):
         count = count + 1
 
     dof = count - num_parameters
+    print("dof: ", dof)
     return chi/dof
 
 def func(x, fit, sim):

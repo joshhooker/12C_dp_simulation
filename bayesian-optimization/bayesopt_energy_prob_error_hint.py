@@ -154,7 +154,7 @@ def find_bounds(parameters, number, base_chi2):
 
     current_chi2 = base_chi2
     count = 1
-    while current_chi2 - base_chi2 < 2:
+    while current_chi2 - base_chi2 < 4:
         current_param = param_value - count*0.01
         if current_param < 0:
             break
@@ -168,13 +168,13 @@ def find_bounds(parameters, number, base_chi2):
         chi2_array.append(chi2)
         print(current_param, chi2)
         current_chi2 = chi2
-        if current_chi2 - base_chi2 > 2:
+        if current_chi2 - base_chi2 > 4:
             break
         count = count + 1
 
     current_chi2 = base_chi2
     count = 1
-    while current_chi2 - base_chi2 < 2:
+    while current_chi2 - base_chi2 < 4:
         current_param = param_value + count*0.01
         parameters_[number] = current_param
         make_json_file(parameters_[0], parameters_[1], parameters_[2], parameters_[3],
@@ -186,7 +186,7 @@ def find_bounds(parameters, number, base_chi2):
         chi2_array.append(chi2)
         print(current_param, chi2)
         current_chi2 = chi2
-        if current_chi2 - base_chi2 > 2:
+        if current_chi2 - base_chi2 > 4:
             break
         count = count + 1
 
@@ -269,14 +269,14 @@ def find_parameter_errors_fixed():
     num_parameters = 8
 
     ex1_best = 0.0
-    ex2_best = 3.565
-    ex3_best = 3.885
-    ex4_best = 3.825
+    ex2_best = 3.0623
+    ex3_best = 3.7088
+    ex4_best = 3.8664
 
-    p_ex1_best = 0.2699
-    p_ex2_best = 0.6542
-    p_ex3_best = 0.9627
-    p_ex4_best = 0.0622
+    p_ex1_best = 0.1564
+    p_ex2_best = 0.1054
+    p_ex3_best = 0.2457
+    p_ex4_best = 0.5580
 
     parameters = [ex1_best, p_ex1_best, ex2_best, p_ex2_best, ex3_best, p_ex3_best, ex4_best, p_ex4_best]
 
@@ -338,7 +338,7 @@ def find_parameter_errors_fixed():
     file_p_ex4.close()
 
 if __name__ == '__main__':
-    max_parameters, num_parameters = run_bayesian_optimization()
-    find_parameter_errors(max_parameters, num_parameters)
+    #max_parameters, num_parameters = run_bayesian_optimization()
+    #find_parameter_errors(max_parameters, num_parameters)
 
-    # find_parameter_errors_fixed()
+    find_parameter_errors_fixed()
