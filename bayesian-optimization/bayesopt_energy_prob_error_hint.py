@@ -51,7 +51,7 @@ def run_bayesian_optimization():
 
     # n_iter: How many steps of bayesian optimization you want to perform
     # init_points: How many steps of random exploration you want to perform
-    optimizer.maximize(init_points=100, n_iter=150)
+    optimizer.maximize(init_points=100, n_iter=250)
 
     print(optimizer.max)
 
@@ -71,7 +71,7 @@ def run_simulation(ex1, p_ex1, ex2, p_ex2, ex3, p_ex3, ex4, p_ex4):
     os.system(cmd)
 
     mse, chi2 = analysis('sim.root', 'output.root', 8)
-    score = 100./mse
+    score = 100./chi2
 
     dir_name = 'output/' + str(counter)
 
@@ -338,7 +338,7 @@ def find_parameter_errors_fixed():
     file_p_ex4.close()
 
 if __name__ == '__main__':
-    #max_parameters, num_parameters = run_bayesian_optimization()
+    max_parameters, num_parameters = run_bayesian_optimization()
     #find_parameter_errors(max_parameters, num_parameters)
 
-    find_parameter_errors_fixed()
+    # find_parameter_errors_fixed()

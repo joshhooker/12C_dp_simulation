@@ -16,9 +16,7 @@ def chisq(obs, sim, error, num_parameters):
         chi += (obs[i] - sim[i])**2 / (error[i]**2)
         count = count + 1
 
-    dof = count - num_parameters
-    print("dof: ", dof)
-    return chi/dof
+    return chi
 
 def func(x, fit, sim):
     sim_copy = np.copy(sim)
