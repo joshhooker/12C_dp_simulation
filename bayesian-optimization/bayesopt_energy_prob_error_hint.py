@@ -67,7 +67,7 @@ def run_simulation(ex1, p_ex1, ex2, p_ex2, ex3, p_ex3, ex4, p_ex4):
 
     make_json_file(ex1, p_ex1, ex2, p_ex2, ex3, p_ex3, ex4, p_ex4)
 
-    cmd = '../build/sim config.json -t 10'
+    cmd = '../build/sim config.json -t 52'
     os.system(cmd)
 
     mse, chi2 = analysis('sim.root', 'output.root', 8)
@@ -338,7 +338,7 @@ def find_parameter_errors_fixed():
     file_p_ex4.close()
 
 if __name__ == '__main__':
-    max_parameters, num_parameters = run_bayesian_optimization()
+    # max_parameters, num_parameters = run_bayesian_optimization()
     #find_parameter_errors(max_parameters, num_parameters)
 
-    # find_parameter_errors_fixed()
+    find_parameter_errors_fixed()
