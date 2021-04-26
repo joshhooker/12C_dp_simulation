@@ -128,7 +128,7 @@ def find_bounds_ex3(parameters, base_chi2):
     while abs(current_chi2 - base_chi2) < 4:
         current_param = param_value - count*0.01
 
-        run_bayesian_optimization_ex2(current_param, count, True)
+        run_bayesian_optimization_ex3(current_param, count, True)
         file_ = np.loadtxt('output_raw_ex3_low_' + str(count) + '.log', skiprows=1)
         chi2_ = np.amin(file_[:, 9])
 
@@ -147,7 +147,7 @@ def find_bounds_ex3(parameters, base_chi2):
     while abs(current_chi2 - base_chi2) < 4:
         current_param = param_value + count*0.01
 
-        run_bayesian_optimization_ex2(current_param, count, False)
+        run_bayesian_optimization_ex3(current_param, count, False)
         file_ = np.loadtxt('output_raw_ex3_high_' + str(count) + '.log', skiprows=1)
         chi2_ = np.amin(file_[:, 9])
 
