@@ -83,7 +83,7 @@ def run_simulation_ex4(ex1, p_ex1, ex2, p_ex2, ex3, p_ex3, ex4, p_ex4, count, lo
 
     make_json_file(ex1, p_ex1, ex2, p_ex2, ex3, p_ex3, ex4, p_ex4)
 
-    cmd = '../build/sim config.json -t 32'
+    cmd = '../build/sim config.json -t 10'
     os.system(cmd)
 
     mse, chi2 = analysis('sim.root', 'output.root', 8)
@@ -116,7 +116,7 @@ def run_simulation_ex4(ex1, p_ex1, ex2, p_ex2, ex3, p_ex3, ex4, p_ex4, count, lo
 def find_bounds_ex4(parameters, base_chi2):
     parameters_ = parameters
     param_value = parameters[6]
-    
+
     param_array = []
     chi2_array = []
 
@@ -128,7 +128,7 @@ def find_bounds_ex4(parameters, base_chi2):
     while abs(current_chi2 - base_chi2) < 4:
         current_param = param_value - count*0.01
 
-        run_bayesian_optimization_ex2(current_param, count, True)
+        run_bayesian_optimization_ex4(current_param, count, True)
         file_ = np.loadtxt('output_raw_ex4_low_' + str(count) + '.log', skiprows=1)
         chi2_ = np.amin(file_[:, 9])
 
@@ -147,7 +147,7 @@ def find_bounds_ex4(parameters, base_chi2):
     while abs(current_chi2 - base_chi2) < 4:
         current_param = param_value + count*0.01
 
-        run_bayesian_optimization_ex2(current_param, count, False)
+        run_bayesian_optimization_ex4(current_param, count, False)
         file_ = np.loadtxt('output_raw_ex4_high_' + str(count) + '.log', skiprows=1)
         chi2_ = np.amin(file_[:, 9])
 
@@ -228,12 +228,12 @@ def find_parameter_errors_fixed():
 
     # Get the base chi2
     make_json_file(ex1_best, p_ex1_best, ex2_best, p_ex2_best, ex3_best, p_ex3_best, ex4_best, p_ex4_best)
-    cmd = '../build/sim config.json -t 32'
+    cmd = '../build/sim config.json -t 10'
     os.system(cmd)
 
     base_mse, base_chi2 = analysis('sim.root', 'output.root', num_parameters)
 
-    find_bounds_ex4(parameters, base_chi2) 
+    find_bounds_ex4(parameters, base_chi2)
 
 if __name__ == '__main__':
     find_parameter_errors_fixed()
