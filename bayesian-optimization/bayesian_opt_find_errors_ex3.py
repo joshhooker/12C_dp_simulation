@@ -124,8 +124,7 @@ def find_bounds_ex3(parameters, base_chi2):
     chi2_array.append(base_chi2)
 
     current_chi2 = base_chi2
-    count = 1
-    while abs(current_chi2 - base_chi2) < 4:
+    for count in range(1, 6):
         current_param = param_value - count*0.01
 
         run_bayesian_optimization_ex3(current_param, count, True)
@@ -135,16 +134,8 @@ def find_bounds_ex3(parameters, base_chi2):
         param_array.append(current_param)
         chi2_array.append(chi2_)
 
-        current_chi2 = chi2_
-
-        if current_chi2 - base_chi2 > 4:
-            break
-
-        count = count + 1
-
     current_chi2 = base_chi2
-    count = 1
-    while abs(current_chi2 - base_chi2) < 4:
+    for count in range(1, 6):
         current_param = param_value + count*0.01
 
         run_bayesian_optimization_ex3(current_param, count, False)
@@ -153,13 +144,6 @@ def find_bounds_ex3(parameters, base_chi2):
 
         param_array.append(current_param)
         chi2_array.append(chi2_)
-
-        current_chi2 = chi2_
-
-        if current_chi2 - base_chi2 > 4:
-            break
-
-        count = count + 1
 
     bounds_ex2 = open('bounds_ex3.dat', 'w')
     for i in range(len(param_array)):
