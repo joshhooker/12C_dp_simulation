@@ -116,7 +116,7 @@ def run_simulation_ex4(ex1, p_ex1, ex2, p_ex2, ex3, p_ex3, ex4, p_ex4, count, lo
 def find_bounds_ex4(parameters, base_chi2):
     parameters_ = parameters
     param_value = parameters[6]
-    
+
     param_array = []
     chi2_array = []
 
@@ -128,7 +128,7 @@ def find_bounds_ex4(parameters, base_chi2):
         current_param = param_value + count*0.01
         print(count, current_param)
 
-        run_bayesian_optimization_ex2(current_param, count, False)
+        run_bayesian_optimization_ex4(current_param, count, False)
         file_ = np.loadtxt('output_raw_ex4_high_' + str(count) + '.log', skiprows=1)
         chi2_ = np.amin(file_[:, 9])
 
@@ -202,7 +202,7 @@ def find_parameter_errors_fixed():
 
     base_chi2 = 0.0
 
-    find_bounds_ex4(parameters, base_chi2) 
+    find_bounds_ex4(parameters, base_chi2)
 
 if __name__ == '__main__':
     find_parameter_errors_fixed()
