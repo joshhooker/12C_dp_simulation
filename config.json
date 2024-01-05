@@ -1,5 +1,5 @@
 {
-  "interactive"      : false,
+  "interactive"      : true,
   "macroName"        : "run.mac",
   "outputFile"       : "sim",
   "beamIon[Z,A]"     : [6, 12],

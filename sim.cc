@@ -6,6 +6,7 @@
 #include <G4RunManager.hh>
 #include <G4StepLimiterPhysics.hh>
 #include <G4UImanager.hh>
+#include <G4VisExecutive.hh>
 #include <G4VModularPhysicsList.hh>
 #include <globals.hh>
 #include <QGSP_BERT.hh>
@@ -48,42 +49,42 @@ int main(int argc,char** argv) {
 
     // Create and read json config
     Json::Value config;
-    std::string configFileName = argv[1];
-    std::ifstream configStream(configFileName.c_str());
-    configStream >> config;
-    configStream.close();
+    std::string config_filename = argv[1];
+    std::ifstream config_stream(config_filename.c_str());
+    config_stream >> config;
+    config_stream.close();
 
     // Parse JSON
-    G4String macroName   = config["macroName"].asString();
+    G4String macro_name   = config["macroName"].asString();
     G4bool is_interactive = config["interactive"].asBool();
 
     // Choose the Random engine
     CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine());
     // Set random seed with system time
-    G4long seed = time(NULL);
+    G4long seed = time(nullptr);
     if(argc>2) seed += 473879*atoi(argv[2]);
     CLHEP::HepRandom::setTheSeed(seed);
 
 #ifdef G4MULTITHREADED
-    G4int nThreads = 0;
+    G4int n_threads = 0;
 #endif
     for(G4int i = 1; i < argc; i++) {
         G4cout << argv[i] << G4endl;
 #ifdef G4MULTITHREADED
         if(G4String(argv[i]) == "-t") {
-            nThreads = G4UIcommand::ConvertToInt(argv[i + 1]);
+            n_threads = G4UIcommand::ConvertToInt(argv[i + 1]);
         }
 #endif
     }
 
     // Construct the default run manager
 #ifdef G4MULTITHREADED
-    G4MTRunManager* runManager = new G4MTRunManager;
-    if(nThreads > 0) {
-        runManager->SetNumberOfThreads(nThreads);
+    auto* run_manager = new G4MTRunManager;
+    if(n_threads > 0) {
+        run_manager->SetNumberOfThreads(n_threads);
     }
 #else
-    G4RunManager* runManager = new G4RunManager;
+    auto* run_manager = new G4RunManager;
 #endif
 
     // Load calibrations
@@ -95,41 +96,37 @@ int main(int argc,char** argv) {
     states->CheckLoaded();
 
     // Mandatory user initialization classes
-    DetectorConstruction* detector = new DetectorConstruction();
-    runManager->SetUserInitialization(detector);
+    auto* detector = new DetectorConstruction();
+    run_manager->SetUserInitialization(detector);
 
     // G4VModularPhysicsList* physicsList = new QGSP_BERT(0);
-    G4VModularPhysicsList* physicsList = new PhysicsList;
-    BinaryReactionPhysics* reactionPhysics = new BinaryReactionPhysics();
+    G4VModularPhysicsList* physics_list = new PhysicsList;
+    auto* reaction_physics = new BinaryReactionPhysics();
     // NonResonantBackgroundPhysics* reactionPhysics = new NonResonantBackgroundPhysics();
-    physicsList->RegisterPhysics(new G4StepLimiterPhysics());
-    physicsList->RegisterPhysics(reactionPhysics);
-    runManager->SetUserInitialization(physicsList);
+    physics_list->RegisterPhysics(new G4StepLimiterPhysics());
+    physics_list->RegisterPhysics(reaction_physics);
+    run_manager->SetUserInitialization(physics_list);
     G4HadronicProcessStore::Instance()->SetVerbose(0);
 
     // User action initialization
-    ActionInitialization* actionInit = new ActionInitialization(detector);
-    runManager->SetUserInitialization(actionInit);
+    auto* action_init = new ActionInitialization(detector);
+    run_manager->SetUserInitialization(action_init);
 
     // Initialize Geant4 kernel
-    runManager->Initialize();
+    run_manager->Initialize();
 
     // Generate energy loss tables for beam and ejectile
     calibration->GetTargetProperties(detector->GetTargetMaterial());
     calibration->ReaddEdxTables();
 
-#ifdef G4VIS_USE
     // Visualization manager construction
-    // G4VisManager* visManager = new G4VisExecutive();
-    // G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
-    G4VisManager* visManager = new G4VisExecutive("Quiet");
-    visManager->Initialize();
-#endif
+    G4VisManager* vis_manager = new G4VisExecutive("Quiet");
+    vis_manager->Initialize();
 
     if(!is_interactive) {
         // execute an argument macro file if exists
         G4String command = "/control/execute ";
-        G4String filename = macroName;
+        G4String filename = macro_name;
         UImanager->ApplyCommand(command + filename);
     }
     else {
@@ -154,10 +151,8 @@ int main(int argc,char** argv) {
     // owned and deleted by the run manager, so they should not be deleted
     // in the main() program !
 
-#ifdef G4VIS_USE
-    delete visManager;
-#endif
-    delete runManager;
+    delete vis_manager;
+    delete run_manager;
 
     if (!is_interactive) {
         // Write histograms/trees
