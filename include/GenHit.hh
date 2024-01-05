@@ -1,5 +1,4 @@
-#ifndef GenHit_h
-#define GenHit_h
+#pragma once
 
 #include <G4Allocator.hh>
 #include <G4ParticleDefinition.hh>
@@ -31,13 +30,13 @@ public:
     inline void operator delete(void*);
 
 private:
-    G4int id_;
-    G4int track_id_;
-    G4double time_;
-    G4double energy_;
-    G4double total_energy_;
+    G4int id_ { 0 };
+    G4int track_id_ { 0 };
+    G4double time_ { 0. };
+    G4double energy_ { 0. };
+    G4double total_energy_ { 0. };
     G4ThreeVector position_;
-    G4ParticleDefinition* particle_;
+    G4ParticleDefinition* particle_ { nullptr };
 };
 
 typedef G4THitsCollection<GenHit> GenHitsCollection;
@@ -52,5 +51,3 @@ inline void* GenHit::operator new(size_t) {
 inline void GenHit::operator delete(void* aHit) {
     GenHitAllocator->FreeSingle((GenHit*) aHit);
 }
-
-#endif

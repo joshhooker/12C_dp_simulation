@@ -1,6 +1,6 @@
 #include "Calibrations.hh"
 
-Calibrations* Calibrations::instance_ = NULL;
+Calibrations* Calibrations::instance_ = nullptr;
 
 Calibrations::Calibrations() {
     double gamma0 = 50.; // mm
@@ -107,7 +107,7 @@ void Calibrations::GetTargetProperties(G4Material* material) {
     heavy_recoil_mass_pdg_ = heavy_recoil_particle->GetPDGMass();
     heavy_recoil_mass_dbl_ = heavy_recoil_particle->GetAtomicMass();
 
-    FILE* file_beam = fopen("beam_energyloss.dat", "w");
+    FILE* file_beam = fopen("beam_energyloss_.dat", "w");
     for(G4double energy = 0.00001; energy < 0.001; energy += 0.00001) {
         G4double energy_particle = energy*MeV;
         G4double dedx = em_cal.ComputeTotalDEDX(energy_particle, beam_particle, target_material)/(MeV/mm);
@@ -126,7 +126,7 @@ void Calibrations::GetTargetProperties(G4Material* material) {
     fflush(file_beam);
     fclose(file_beam);
 
-    FILE* file_ejectile = fopen("ejectile_energyloss.dat", "w");
+    FILE* file_ejectile = fopen("ejectile_energyloss_.dat", "w");
     for(G4double energy = 0.00001; energy < 0.001; energy += 0.00001) {
         G4double energy_particle = energy*MeV;
         G4double dedx = em_cal.ComputeTotalDEDX(energy_particle, ejectile_particle, target_material)/(MeV/mm);
@@ -147,10 +147,10 @@ void Calibrations::GetTargetProperties(G4Material* material) {
 }
 
 void Calibrations::ReaddEdxTables() {
-    beam_energyloss = new EnergyLoss();
-    beam_energyloss->ReadBasicdEdx("beam_energyloss.dat");
+    beam_energyloss_ = new EnergyLoss();
+    beam_energyloss_->ReadBasicdEdx("beam_energyloss_.dat");
 
-    ejectile_energyloss = new EnergyLoss();
-    ejectile_energyloss->ReadBasicdEdx("ejectile_energyloss.dat");
+    ejectile_energyloss_ = new EnergyLoss();
+    ejectile_energyloss_->ReadBasicdEdx("ejectile_energyloss_.dat");
 }
 

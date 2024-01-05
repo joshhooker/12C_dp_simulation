@@ -1,13 +1,15 @@
+#include <utility>
+
 #include "GenSD.hh"
 #include "G4SDManager.hh"
 
 GenSD::GenSD(G4String name) :
-    G4VSensitiveDetector(name), hits_collection_(0), hcid_(-1) {
+    G4VSensitiveDetector(std::move(name)), hits_collection_(0), hcid_(-1) {
     G4String HCname = "genCollection";
     collectionName.insert(HCname);
 }
 
-GenSD::~GenSD() {}
+GenSD::~GenSD() = default;
 
 void GenSD::Initialize(G4HCofThisEvent* hce) {
     hits_collection_ = new GenHitsCollection(SensitiveDetectorName, collectionName[0]);
@@ -28,7 +30,7 @@ G4bool GenSD::ProcessHits(G4Step* step, G4TouchableHistory*) {
     G4StepPoint* pre_step_point = step->GetPreStepPoint();
     G4StepPoint* post_step_point = step->GetPostStepPoint();
 
-    G4TouchableHistory* touchable = (G4TouchableHistory*)(pre_step_point->GetTouchable());
+    auto* touchable = (G4TouchableHistory*)(pre_step_point->GetTouchable());
     G4int copy_no = touchable->GetVolume()->GetCopyNo();
     G4double hit_time = pre_step_point->GetGlobalTime();
     G4int track_id = step->GetTrack()->GetTrackID();
@@ -51,7 +53,7 @@ G4bool GenSD::ProcessHits(G4Step* step, G4TouchableHistory*) {
         hit->AddEnergy(edep/MeV);
     }
     else {
-        GenHit* hit = new GenHit(copy_no, hit_time);
+        auto* hit = new GenHit(copy_no, hit_time);
         hit->SetTrackID(track_id);
         hit->AddEnergy(edep/MeV);
         hit->SetPosition(kPosition/mm);

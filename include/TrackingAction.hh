@@ -1,5 +1,4 @@
-#ifndef TrackingAction_h
-#define TrackingAction_h
+#pragma once
 
 #include <G4String.hh>
 #include <G4UserTrackingAction.hh>
@@ -19,7 +18,5 @@ public:
 
 private:
     G4String name_;
-    EventAction* event_action_;
+    EventAction* event_action_ { nullptr };
 };
-
-#endif

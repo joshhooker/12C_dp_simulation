@@ -5,14 +5,14 @@ ActionInitialization::ActionInitialization(DetectorConstruction* detector) :
 
 }
 
-ActionInitialization::~ActionInitialization() {}
+ActionInitialization::~ActionInitialization() = default;
 
 void ActionInitialization::BuildForMaster() const {
-    SetUserAction(new RunAction(detector_, NULL));
+    SetUserAction(new RunAction(detector_, nullptr));
 }
 
 void ActionInitialization::Build() const {
-    PrimaryGeneratorAction* primary = new PrimaryGeneratorAction();
+    auto* primary = new PrimaryGeneratorAction();
     SetUserAction(primary);
 
     SetUserAction(new RunAction(detector_, primary));

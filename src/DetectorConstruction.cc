@@ -4,7 +4,7 @@ DetectorConstruction::DetectorConstruction() :
     G4VUserDetectorConstruction()
 {}
 
-DetectorConstruction::~DetectorConstruction() {}
+DetectorConstruction::~DetectorConstruction() = default;
 
 G4VPhysicalVolume* DetectorConstruction::Construct() {
     ConstructMaterials();
@@ -51,7 +51,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     // Silver foil
     G4Material* ag_material = G4Material::GetMaterial("G4_Ag");
 
-    G4Material* vacuum =
+    auto* vacuum =
         new G4Material("Vacuum",      //Name as String
             1,             //Atomic Number,  in this case we use 1 for hydrogen
             1.008*g/mole,  //Mass per Mole "Atomic Weight"  1.008*g/mole for Hydoren
@@ -63,14 +63,14 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     // Create vacuum filled world
     G4VSolid* world_solid = new G4Box("worldBox", 0.4*m, 0.4*m, 1.*m);
     world_logical_ = new G4LogicalVolume(world_solid, vacuum, "worldLogical");
-    G4VPhysicalVolume* world_physical = new G4PVPlacement(0, G4ThreeVector(), world_logical_, "worldPhysical", 0,
+    G4VPhysicalVolume* world_physical = new G4PVPlacement(nullptr, G4ThreeVector(), world_logical_, "worldPhysical", nullptr,
                                                           false, 0, check_overlaps);
 
     // D2 Target
     G4double target_thickness = cal->GetTargetThickness();
     G4VSolid* target_solid = new G4Tubs("targetSolid", 0., 50.*mm, target_thickness/2., 0., 360.*deg);
     target_logical_ = new G4LogicalVolume(target_solid, D2, "targetLogical");
-    new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), target_logical_, "targetPhysical", world_logical_,
+    new G4PVPlacement(nullptr, G4ThreeVector(0., 0., 0.), target_logical_, "targetPhysical", world_logical_,
                       false, 0, check_overlaps);
 
     // Carbon target instead of D2
@@ -88,7 +88,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     G4double ag_thickness = 4.64*um;
     G4VSolid* ag_solid = new G4Tubs("agSolid", 0., 50.*mm, ag_thickness/2., 0., 360.*deg);
     ag_logical_ = new G4LogicalVolume(ag_solid, ag_material, "agLogical");
-    new G4PVPlacement(0, G4ThreeVector(0., 0., target_thickness/2. + ag_thickness/2.), ag_logical_, "agPhysical", world_logical_,
+    new G4PVPlacement(nullptr, G4ThreeVector(0., 0., target_thickness/2. + ag_thickness/2.), ag_logical_, "agPhysical", world_logical_,
                       false, 0, check_overlaps);
 
     // Yu Detector
@@ -189,7 +189,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     sprintf(sd1_d1_al1_name, "sd1_d1_al1Logical");
     sd1_d1_al1_logical_ = new G4LogicalVolume(sd1_d1_al1_solid, al_material, sd1_d1_al1_name);
     sprintf(sd1_d1_al1_name, "sd1_d1_al1Physical");
-    new G4PVPlacement(0, G4ThreeVector(0., 0., sd1_distance - sd1_thickness/2. - sd1_d1_b_thickness - sd1_d1_al2_thickness - 
+    new G4PVPlacement(nullptr, G4ThreeVector(0., 0., sd1_distance - sd1_thickness/2. - sd1_d1_b_thickness - sd1_d1_al2_thickness -
         sd1_d1_sio2_thickness - sd1_d1_al1_thickness/2.), sd1_d1_al1_logical_, sd1_d1_al1_name, world_logical_, false, 0, check_overlaps);
 
     sprintf(sd1_d1_sio2_name, "sd1_d1_sio2");
@@ -197,7 +197,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     sprintf(sd1_d1_sio2_name, "sd1_d1_sio2Logical");
     sd1_d1_sio2_logical_ = new G4LogicalVolume(sd1_d1_sio2_solid, sio2_material, sd1_d1_sio2_name);
     sprintf(sd1_d1_sio2_name, "sd1_d1_sio2Physical");
-    new G4PVPlacement(0, G4ThreeVector(0., 0., sd1_distance - sd1_thickness/2. - sd1_d1_b_thickness - sd1_d1_al2_thickness - 
+    new G4PVPlacement(nullptr, G4ThreeVector(0., 0., sd1_distance - sd1_thickness/2. - sd1_d1_b_thickness - sd1_d1_al2_thickness -
         sd1_d1_sio2_thickness/2.), sd1_d1_sio2_logical_, sd1_d1_sio2_name, world_logical_, false, 0, check_overlaps);
 
     sprintf(sd1_d1_al2_name, "sd1_d1_al2");
@@ -205,7 +205,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     sprintf(sd1_d1_al2_name, "sd1_d1_al2Logical");
     sd1_d1_al2_logical_ = new G4LogicalVolume(sd1_d1_al2_solid, al_material, sd1_d1_al2_name);
     sprintf(sd1_d1_al2_name, "sd1_d1_al2Physical");
-    new G4PVPlacement(0, G4ThreeVector(0., 0., sd1_distance - sd1_thickness/2. - sd1_d1_b_thickness - sd1_d1_al2_thickness/2.), 
+    new G4PVPlacement(nullptr, G4ThreeVector(0., 0., sd1_distance - sd1_thickness/2. - sd1_d1_b_thickness - sd1_d1_al2_thickness/2.),
         sd1_d1_al2_logical_, sd1_d1_al2_name, world_logical_, false, 0, check_overlaps);
 
     sprintf(sd1_d1_b_name, "sd1_d1_b");
@@ -213,7 +213,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     sprintf(sd1_d1_b_name, "sd1_d1_bLogical");
     sd1_d1_b_logical_ = new G4LogicalVolume(sd1_d1_b_solid, b_material, sd1_d1_b_name);
     sprintf(sd1_d1_b_name, "sd1_d1_bPhysical");
-    new G4PVPlacement(0, G4ThreeVector(0., 0., sd1_distance - sd1_thickness/2. - sd1_d1_b_thickness/2.), 
+    new G4PVPlacement(nullptr, G4ThreeVector(0., 0., sd1_distance - sd1_thickness/2. - sd1_d1_b_thickness/2.),
         sd1_d1_b_logical_, sd1_d1_b_name, world_logical_, false, 0, check_overlaps);
 
     // Sd1 active Si layer
@@ -239,7 +239,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     sprintf(sd1_d2_p_name, "sd1_d2_pLogical");
     sd1_d2_p_logical_ = new G4LogicalVolume(sd1_d2_p_solid, p_material, sd1_d2_p_name);
     sprintf(sd1_d2_p_name, "sd1_d2_pPhysical");
-    new G4PVPlacement(0, G4ThreeVector(0., 0., sd1_distance + sd1_thickness/2. + sd1_d2_p_thickness/2.), 
+    new G4PVPlacement(nullptr, G4ThreeVector(0., 0., sd1_distance + sd1_thickness/2. + sd1_d2_p_thickness/2.),
         sd1_d2_p_logical_, sd1_d2_p_name, world_logical_, false, 0, check_overlaps);
 
     sprintf(sd1_d2_al_name, "sd1_d2_al");
@@ -247,7 +247,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     sprintf(sd1_d2_al_name, "sd1_d2_alLogical");
     sd1_d2_al_logical_ = new G4LogicalVolume(sd1_d2_al_solid, al_material, sd1_d2_al_name);
     sprintf(sd1_d2_al_name, "sd1_d2_alPhysical");
-    new G4PVPlacement(0, G4ThreeVector(0., 0., sd1_distance + sd1_thickness/2. + sd1_d2_p_thickness + sd1_d2_al_thickness/2.), 
+    new G4PVPlacement(nullptr, G4ThreeVector(0., 0., sd1_distance + sd1_thickness/2. + sd1_d2_p_thickness + sd1_d2_al_thickness/2.),
         sd1_d2_al_logical_, sd1_d2_al_name, world_logical_, false, 0, check_overlaps);
 
     // Sd2
@@ -266,7 +266,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     sprintf(sd2_d2_al_name, "sd2_d2_alLogical");
     sd2_d2_al_logical_ = new G4LogicalVolume(sd2_d2_al_solid, al_material, sd2_d2_al_name);
     sprintf(sd2_d2_al_name, "sd2_d2_alPhysical");
-    new G4PVPlacement(0, G4ThreeVector(0., 0., sd2_distance - sd2_thickness/2. - sd2_d2_p_thickness - sd2_d2_al_thickness/2.), 
+    new G4PVPlacement(nullptr, G4ThreeVector(0., 0., sd2_distance - sd2_thickness/2. - sd2_d2_p_thickness - sd2_d2_al_thickness/2.),
         sd2_d2_al_logical_, sd2_d2_al_name, world_logical_, false, 0, check_overlaps);
 
     sprintf(sd2_d2_p_name, "sd2_d2_p");
@@ -274,7 +274,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     sprintf(sd2_d2_p_name, "sd2_d2_pLogical");
     sd2_d2_p_logical_ = new G4LogicalVolume(sd2_d2_p_solid, p_material, sd2_d2_p_name);
     sprintf(sd2_d2_p_name, "sd2_d2_pPhysical");
-    new G4PVPlacement(0, G4ThreeVector(0., 0., sd2_distance - sd2_thickness/2. - sd1_d2_p_thickness/2.), 
+    new G4PVPlacement(nullptr, G4ThreeVector(0., 0., sd2_distance - sd2_thickness/2. - sd1_d2_p_thickness/2.),
         sd2_d2_p_logical_, sd2_d2_p_name, world_logical_, false, 0, check_overlaps);
 
     // Sd2 active Si layer
@@ -351,17 +351,17 @@ void DetectorConstruction::ConstructSDandField() {
 }
 
 void DetectorConstruction::SetAttributes() {
-    G4VisAttributes* world_attr = new G4VisAttributes(G4Colour(0.5, 0.5, 0.5));
+    auto* world_attr = new G4VisAttributes(G4Colour(0.5, 0.5, 0.5));
     world_attr->SetVisibility(true);
     world_attr->SetForceWireframe(true);
     world_logical_->SetVisAttributes(world_attr);
 
-    G4VisAttributes* target_attr = new G4VisAttributes(G4Colour(0.5, 0.5, 0.5));
+    auto* target_attr = new G4VisAttributes(G4Colour(0.5, 0.5, 0.5));
     target_attr->SetVisibility(true);
     target_attr->SetForceSolid(true);
     target_logical_->SetVisAttributes(target_attr);
 
-    G4VisAttributes* ag_attr = new G4VisAttributes(G4Colour::White());
+    auto* ag_attr = new G4VisAttributes(G4Colour::White());
     ag_attr->SetVisibility(true);
     ag_attr->SetForceSolid(true);
     ag_logical_->SetVisAttributes(ag_attr);

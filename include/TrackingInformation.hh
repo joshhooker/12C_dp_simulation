@@ -1,5 +1,4 @@
-#ifndef TrackingInformation_h
-#define TrackingInformation_h
+#pragma once
 
 #include <G4ParticleDefinition.hh>
 #include <G4ThreeVector.hh>
@@ -51,23 +50,21 @@ public:
     void SetHeavyRecoil(G4ParticleDefinition* particle) {heavy_recoil_ = particle;}
 
 private:
-    G4double energy_;
-    G4double cm_energy_;
-    G4double cm_light_theta_;
-    G4double lab_light_theta_;
-    G4double cm_light_phi_;
-    G4double lab_light_phi_;
-    G4double cm_heavy_theta_;
-    G4double lab_heavy_theta_;
-    G4double light_energy_;
-    G4double heavy_energy_;
+    G4double energy_ { 0. };
+    G4double cm_energy_ { 0. };
+    G4double cm_light_theta_ { 0. };
+    G4double lab_light_theta_ { 0. };
+    G4double cm_light_phi_ { 0. };
+    G4double lab_light_phi_ { 0. };
+    G4double cm_heavy_theta_ { 0. };
+    G4double lab_heavy_theta_ { 0. };
+    G4double light_energy_ { 0. };
+    G4double heavy_energy_ { 0. };
     G4ThreeVector vertex_;
-    G4double qvalue_;
+    G4double qvalue_ { 0. };
     G4double excited_energy_;
-    G4ParticleDefinition* light_recoil_;
-    G4ParticleDefinition* heavy_recoil_;
-    G4bool background_;
-    G4int state_number_;
+    G4ParticleDefinition* light_recoil_ { nullptr };
+    G4ParticleDefinition* heavy_recoil_ { nullptr };
+    G4bool background_ { false };
+    G4int state_number_ { 0 };
 };
-
-#endif

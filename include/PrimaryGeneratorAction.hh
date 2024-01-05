@@ -1,5 +1,4 @@
-#ifndef PrimaryGeneratorAction_h
-#define PrimaryGeneratorAction_h
+#pragma once
 
 #include <ctime>
 
@@ -12,7 +11,6 @@
 #include <G4VUserPrimaryGeneratorAction.hh>
 #include <Randomize.hh>
 
-#include "Analysis.hh"
 #include "Calibrations.hh"
 #include "EventAction.hh"
 
@@ -31,11 +29,9 @@ public:
     G4ParticleGun* GetParticleGun() {return particle_gun_;};
 
 private:
-    G4ParticleGun* particle_gun_;
-    G4ParticleDefinition* particle_;
-    G4GenericMessenger* messenger_;
+    G4ParticleGun* particle_gun_ { nullptr };
+    G4ParticleDefinition* particle_ { nullptr };
+    G4GenericMessenger* messenger_ { nullptr };
 
     void DefineCommands();
 };
-
-#endif

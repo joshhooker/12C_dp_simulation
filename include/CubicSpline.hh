@@ -1,5 +1,4 @@
-#ifndef CubicSpline_h
-#define CubicSpline_h
+#pragma once
 
 #include <array>
 #include <cassert>
@@ -155,5 +154,3 @@ template <typename T> inline double CubicSpline::operator()(T x) const{
 }
 
 inline CubicSpline::~CubicSpline() = default;
-
-#endif

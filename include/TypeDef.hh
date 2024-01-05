@@ -1,5 +1,4 @@
-#ifndef TypeDef_h
-#define TypeDef_h
+#pragma once
 
 #include <G4ThreeVector.hh>
 #include <G4Track.hh>
@@ -86,5 +85,3 @@ typedef struct uniform_angle_output {
     G4double lab_heavy_energy;
     G4bool correct_kinematics;
 } uniform_angle_output;
-
-#endif //TypeDef_h

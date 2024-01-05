@@ -1,5 +1,4 @@
-#ifndef NonResonantBackgroundPhysics_h
-#define NonResonantBackgroundPhysics_h
+#pragma once
 
 #include <map>
 #include <string>
@@ -22,5 +21,3 @@ public:
 
 private:
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef EventAction_h
-#define EventAction_h
+#pragma once
 
 #include <cassert>
 #include <cstdio>
@@ -8,6 +7,7 @@
 
 #include <G4Event.hh>
 #include <G4ParticleDefinition.hh>
+#include <G4RootAnalysisManager.hh>
 #include <G4RunManager.hh>
 #include <G4SDManager.hh>
 #include <G4SystemOfUnits.hh>
@@ -24,7 +24,6 @@
 #include <TROOT.h>
 #include <TVector3.h>
 
-#include "Analysis.hh"
 #include "Calibrations.hh"
 #include "GenHit.hh"
 #include "EnergyLoss.hh"
@@ -59,42 +58,40 @@ public:
     void SetStateNumber(G4int state_number) {state_number_ = state_number;}
 
 private:
-    G4int yu_hcid_[16];
-    G4int sd1_hcid_[24];
-    G4int sd2_hcid_[24];
+    G4int yu_hcid_[16] { 0 };
+    G4int sd1_hcid_[24] { 0 };
+    G4int sd2_hcid_[24] { 0 };
 
-    G4double beam_energy_;
+    G4double beam_energy_ { 0. };
     std::vector<G4int> yu_detect_vec_;
     std::vector<G4int> yu_ring_vec_;
     std::vector<G4double> yu_energy_vec_;
 
-    G4int yu_det_;
-    G4int yu_ring_;
-    G4double yu_energy_;
+    G4int yu_det_ { 0 };
+    G4int yu_ring_ { 0 };
+    G4double yu_energy_ { 0. };
     G4ThreeVector yu_position_;
 
-    G4int sd1_det_;
-    G4int sd1_ring_;
-    G4double sd1_energy_;
+    G4int sd1_det_ { 0 };
+    G4int sd1_ring_ { 0 };
+    G4double sd1_energy_ { 0. };
 
-    G4int sd2_det_;
-    G4int sd2_ring_;
-    G4double sd2_energy_;
+    G4int sd2_det_ { 0 };
+    G4int sd2_ring_ { 0 };
+    G4double sd2_energy_ { 0. };
 
-    G4double energy_;
-    G4double excitation_energy_;
-    G4double qvalue_;
-    G4double light_energy_;
-    G4double light_angle_theta_cm_;
-    G4double light_angle_theta_lab_;
-    G4double light_angle_phi_cm_;
-    G4double light_angle_phi_lab_;
-    G4double vertex_x_;
-    G4double vertex_y_;
-    G4double vertex_z_;
+    G4double energy_ { 0. };
+    G4double excitation_energy_ { 0. };
+    G4double qvalue_ { 0. };
+    G4double light_energy_ { 0. };
+    G4double light_angle_theta_cm_ { 0. };
+    G4double light_angle_theta_lab_ { 0. };
+    G4double light_angle_phi_cm_ { 0. };
+    G4double light_angle_phi_lab_ { 0. };
+    G4double vertex_x_ { 0. };
+    G4double vertex_y_ { 0. };
+    G4double vertex_z_ { 0. };
 
-    G4bool background_;
-    G4int state_number_;
+    G4bool background_ { false };
+    G4int state_number_ { 0 };
 };
-
-#endif

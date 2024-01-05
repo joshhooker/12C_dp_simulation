@@ -1,5 +1,4 @@
-#ifndef Calibrations_h
-#define Calibrations_h
+#pragma once
 
 #include <cmath>
 #include <cstdio>
@@ -49,8 +48,8 @@ public:
     void GetTargetProperties(G4Material* material);
     void ReaddEdxTables();
 
-    EnergyLoss* GetBeamEnergyLoss() {return beam_energyloss;}
-    EnergyLoss* GetEjectileEnergyLoss() {return ejectile_energyloss;}
+    EnergyLoss* GetBeamEnergyLoss() {return beam_energyloss_;}
+    EnergyLoss* GetEjectileEnergyLoss() {return ejectile_energyloss_;}
 
     G4double GetBeamMassPDG() {return beam_mass_pdg_;}
     G4double GetBeamMassDBL() {return beam_mass_dbl_;}
@@ -62,37 +61,34 @@ public:
 private:
     static Calibrations* instance_;
 
-    EnergyLoss* beam_energyloss;
-    EnergyLoss* ejectile_energyloss;
+    EnergyLoss* beam_energyloss_ { nullptr };
+    EnergyLoss* ejectile_energyloss_ { nullptr };
 
-    G4double beam_mass_pdg_;
-    G4double beam_mass_dbl_;
-    G4double ejectile_mass_pdg_;
-    G4double ejectile_mass_dbl_;
-    G4double heavy_recoil_mass_pdg_;
-    G4double heavy_recoil_mass_dbl_;
+    G4double beam_mass_pdg_ { 0. };
+    G4double beam_mass_dbl_ { 0. };
+    G4double ejectile_mass_pdg_ { 0. };
+    G4double ejectile_mass_dbl_ { 0. };
+    G4double heavy_recoil_mass_pdg_ { 0. };
+    G4double heavy_recoil_mass_dbl_ { 0. };
 
-    double yu_angle_low_bin_[16];
-    double yu_angle_high_bin_[16];
-    double yu_angle_[16];
+    G4double yu_angle_low_bin_[16];
+    G4double yu_angle_high_bin_[16];
+    G4double yu_angle_[16];
 
     void ReadJSON();
     std::pair<G4int, G4int> beam_ion_;
     std::pair<G4int, G4int> target_ion_;
     std::pair<G4int, G4int> ejectile_ion_;
-    double beam_energy_;
-    double beam_offset_x;
-    double beam_offset_y;
-    double target_thickness_;
-    double yu_energy_fwhm_;
-    double yu_threshold_;
-    double state_energy_fwhm_;
-    double background_amount_;
+    G4double beam_energy_ { 0. };
+    G4double beam_offset_x { 0. };
+    G4double beam_offset_y { 0. };
+    G4double target_thickness_ { 0. };
+    G4double yu_energy_fwhm_ { 0. };
+    G4double yu_threshold_ { 0. };
+    G4double state_energy_fwhm_ { 0. };
+    G4double background_amount_ { 0. };
 
-    bool use_energy_qvalue_;
+    bool use_energy_qvalue_ { false };
 
     std::string output_file_;
 };
-
-
-#endif

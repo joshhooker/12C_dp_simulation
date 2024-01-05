@@ -3,7 +3,7 @@ build/
 .clangd/
 *__pycache__
 compile_commands.json
-bayesian-optimization/beam_energyloss.dat
-bayesian-optimization/ejectile_energyloss.dat
+bayesian-optimization/beam_energyloss_.dat
+bayesian-optimization/ejectile_energyloss_.dat
 bayesian-optimization/logs.json
 bayesian-optimization/output_raw.log

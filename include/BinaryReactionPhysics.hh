@@ -1,5 +1,4 @@
-#ifndef BinaryReactionPhysics_h
-#define BinaryReactionPhysics_h
+#pragma once
 
 #include <map>
 #include <string>
@@ -23,5 +22,3 @@ public:
 
 private:
 };
-
-#endif

@@ -119,7 +119,7 @@ void EventAction::EndOfEventAction(const G4Event* event) {
     yu_position_ = yu_detect_vec[0].position;
 
     yu_energy_ = 0.;
-    for (auto yuDet: yu_detect_vec) {
+    for (const auto& yuDet: yu_detect_vec) {
         yu_energy_ += yuDet.energy;
     }
 
@@ -227,24 +227,24 @@ void EventAction::EndOfEventAction(const G4Event* event) {
     root_file->GetQValueVertex()->Fill(qvalue_/MeV, vertex_z_/um);
 
     // fill ttree
-    auto analysisManager = G4AnalysisManager::Instance();
+    auto analysis_manager = G4RootAnalysisManager::Instance();
 
-    analysisManager->FillNtupleIColumn(0, yu_det_);
-    analysisManager->FillNtupleIColumn(1, yu_ring_);
-    analysisManager->FillNtupleDColumn(2, yu_energy_/MeV);
+    analysis_manager->FillNtupleIColumn(0, yu_det_);
+    analysis_manager->FillNtupleIColumn(1, yu_ring_);
+    analysis_manager->FillNtupleDColumn(2, yu_energy_/MeV);
 
-    analysisManager->FillNtupleIColumn(3, sd1_det_);
-    analysisManager->FillNtupleIColumn(4, sd1_ring_);
-    analysisManager->FillNtupleDColumn(5, sd1_energy_/MeV);
+    analysis_manager->FillNtupleIColumn(3, sd1_det_);
+    analysis_manager->FillNtupleIColumn(4, sd1_ring_);
+    analysis_manager->FillNtupleDColumn(5, sd1_energy_/MeV);
 
-    analysisManager->FillNtupleIColumn(6, sd2_det_);
-    analysisManager->FillNtupleIColumn(7, sd2_ring_);
-    analysisManager->FillNtupleDColumn(8, sd2_energy_/MeV);
+    analysis_manager->FillNtupleIColumn(6, sd2_det_);
+    analysis_manager->FillNtupleIColumn(7, sd2_ring_);
+    analysis_manager->FillNtupleDColumn(8, sd2_energy_/MeV);
 
-    analysisManager->FillNtupleDColumn(9,  energy_/MeV);
-    analysisManager->FillNtupleDColumn(10, light_energy_/MeV);
-    analysisManager->FillNtupleDColumn(11, qvalue_/MeV);
-    analysisManager->FillNtupleDColumn(12, vertex_z_/um);
+    analysis_manager->FillNtupleDColumn(9, energy_/MeV);
+    analysis_manager->FillNtupleDColumn(10, light_energy_/MeV);
+    analysis_manager->FillNtupleDColumn(11, qvalue_/MeV);
+    analysis_manager->FillNtupleDColumn(12, vertex_z_/um);
 
     G4int background = -1;
     G4int excited_state_number = -1;
@@ -255,11 +255,11 @@ void EventAction::EndOfEventAction(const G4Event* event) {
         excited_state_number = state_number_;
     }
 
-    analysisManager->FillNtupleIColumn(13, background);
-    analysisManager->FillNtupleIColumn(14, excited_state_number);
-    analysisManager->FillNtupleDColumn(15, proton_energy);
-    analysisManager->FillNtupleDColumn(16, qvalue/MeV);
+    analysis_manager->FillNtupleIColumn(13, background);
+    analysis_manager->FillNtupleIColumn(14, excited_state_number);
+    analysis_manager->FillNtupleDColumn(15, proton_energy);
+    analysis_manager->FillNtupleDColumn(16, qvalue/MeV);
 
-    analysisManager->AddNtupleRow();
+    analysis_manager->AddNtupleRow();
 
 }

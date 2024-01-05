@@ -1,5 +1,4 @@
-#ifndef EnergyLoss_h
-#define EnergyLoss_h
+#pragma once
 
 #include <algorithm>
 #include <cassert>
@@ -642,5 +641,3 @@ inline void EnergyLoss::UseCalcRangeDebug() {
 inline double GetdEdx(const EnergyLoss& elClass, double energy) {
     return elClass.energy_spline_(energy);
 }
-
-#endif

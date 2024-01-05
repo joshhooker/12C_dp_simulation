@@ -1,15 +1,14 @@
-#ifndef RunAction_h
-#define RunAction_h
+#pragma once
 
 #include <G4EmCalculator.hh>
 #include <G4ParticleGun.hh>
 #include <G4ProcessManager.hh>
+#include <G4RootAnalysisManager.hh>
 #include <G4SystemOfUnits.hh>
 #include <G4Threading.hh>
 #include <G4UnitsTable.hh>
 #include <G4UserRunAction.hh>
 
-#include "Analysis.hh"
 #include "DetectorConstruction.hh"
 #include "EventAction.hh"
 #include "PrimaryGeneratorAction.hh"
@@ -30,8 +29,6 @@ public:
  	void EndOfRunAction(const G4Run*);
 
 private:
- 	DetectorConstruction* detector_;
- 	PrimaryGeneratorAction* primary_;
+ 	DetectorConstruction* detector_ { nullptr };
+ 	PrimaryGeneratorAction* primary_ { nullptr };
 };
-
-#endif

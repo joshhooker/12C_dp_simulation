@@ -1,5 +1,4 @@
-#ifndef DetectorConstruction_h
-#define DetectorConstruction_h
+#pragma once
 
 #include <algorithm>
 #include <iostream>
@@ -54,29 +53,27 @@ private:
     void ConstructMaterials();
     void SetAttributes();
 
-    G4LogicalVolume* world_logical_;
-    G4LogicalVolume* target_logical_;
-    G4LogicalVolume* ag_logical_;
+    G4LogicalVolume* world_logical_ { nullptr };
+    G4LogicalVolume* target_logical_ { nullptr };
+    G4LogicalVolume* ag_logical_ { nullptr };
 
-    G4LogicalVolume* yu_logical_[16];
-    G4LogicalVolume* yd_logical_[16];
+    G4LogicalVolume* yu_logical_[16] { nullptr };
+    G4LogicalVolume* yd_logical_[16] { nullptr };
 
-    G4LogicalVolume* sd1_d1_al1_logical_;
-    G4LogicalVolume* sd1_d1_sio2_logical_;
-    G4LogicalVolume* sd1_d1_al2_logical_;
-    G4LogicalVolume* sd1_d1_b_logical_;
-    G4LogicalVolume* sd1_d2_p_logical_;
-    G4LogicalVolume* sd1_d2_al_logical_;
+    G4LogicalVolume* sd1_d1_al1_logical_ { nullptr };
+    G4LogicalVolume* sd1_d1_sio2_logical_ { nullptr };
+    G4LogicalVolume* sd1_d1_al2_logical_ { nullptr };
+    G4LogicalVolume* sd1_d1_b_logical_ { nullptr };
+    G4LogicalVolume* sd1_d2_p_logical_ { nullptr };
+    G4LogicalVolume* sd1_d2_al_logical_ { nullptr };
 
-    G4LogicalVolume* sd2_d2_p_logical_;
-    G4LogicalVolume* sd2_d2_al_logical_;
+    G4LogicalVolume* sd2_d2_p_logical_ { nullptr };
+    G4LogicalVolume* sd2_d2_al_logical_ { nullptr };
 
-    G4LogicalVolume* sd1_logical_[24];
-    G4LogicalVolume* sd2_logical_[24];
+    G4LogicalVolume* sd1_logical_[24] { nullptr };
+    G4LogicalVolume* sd2_logical_[24] { nullptr };
 
-    G4UserLimits* step_limit_;
+    G4UserLimits* step_limit_ { nullptr };
 
-    G4Material* target_material_;
+    G4Material* target_material_ { nullptr };
 };
-
-#endif

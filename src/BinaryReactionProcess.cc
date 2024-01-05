@@ -287,7 +287,7 @@ G4VParticleChange* BinaryReactionProcess::Decay(const G4Track& aTrack, G4int lig
     }
 
     // Setup Particle 1
-    G4DynamicParticle* particle1 = new G4DynamicParticle;
+    auto* particle1 = new G4DynamicParticle;
     G4ParticleDefinition* particle1_def;
     if (light_charge == 0 && light_mass == 1) {
         G4String particle_name;
@@ -300,14 +300,14 @@ G4VParticleChange* BinaryReactionProcess::Decay(const G4Track& aTrack, G4int lig
         else particle1_def = particle_table->GetIonTable()->GetIon(light_charge, light_mass, 0.);
     }
     particle1->SetDefinition(particle1_def);
-    G4double particle1_mass_dbl = static_cast<G4double>(particle1_def->GetAtomicMass());
+    auto particle1_mass_dbl = static_cast<G4double>(particle1_def->GetAtomicMass());
     G4double particle1_mass_pdg = particle1_def->GetPDGMass()/CLHEP::amu_c2;
 
     // Setup Particle 2
-    G4DynamicParticle* particle2 = new G4DynamicParticle;
+    auto* particle2 = new G4DynamicParticle;
     G4ParticleDefinition* particle2_def = G4IonTable::GetIonTable()->GetIon(heavy_charge, heavy_mass, 0.);
     particle2->SetDefinition(particle2_def);
-    G4double particle2_mass_dbl = static_cast<G4double>(particle2_def->GetAtomicMass());
+    auto particle2_mass_dbl = static_cast<G4double>(particle2_def->GetAtomicMass());
     G4double particle2_mass_pdg = particle2_def->GetPDGMass()/CLHEP::amu_c2;
 
     G4double qvalue = aTrack.GetDynamicParticle()->GetDefinition()->GetPDGMass() -
@@ -340,8 +340,8 @@ G4VParticleChange* BinaryReactionProcess::Decay(const G4Track& aTrack, G4int lig
     particle1->SetKineticEnergy((total_mom_1*total_mom_1)/(2.*particle1->GetMass()));
     particle2->SetKineticEnergy((total_mom_2*total_mom_2)/(2.*particle2->GetMass()));
 
-    G4Track* sec1 = new G4Track(particle1, aTrack.GetGlobalTime(), aTrack.GetPosition());
-    G4Track* sec2 = new G4Track(particle2, aTrack.GetGlobalTime(), aTrack.GetPosition());
+    auto* sec1 = new G4Track(particle1, aTrack.GetGlobalTime(), aTrack.GetPosition());
+    auto* sec2 = new G4Track(particle2, aTrack.GetGlobalTime(), aTrack.GetPosition());
 
     aParticleChange.SetNumberOfSecondaries(2);
     aParticleChange.AddSecondary(sec1);

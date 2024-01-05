@@ -1,5 +1,4 @@
-#ifndef ProcessCSDistribution_h
-#define ProcessCSDistribution_h
+#pragma once
 
 #include <cmath>
 #include <fstream>
@@ -10,5 +9,3 @@
 
 void readDistribution();
 double getEnergy(double);
-
-#endif

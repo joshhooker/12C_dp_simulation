@@ -1,6 +1,6 @@
 #include "RootFile.hh"
 
-RootFile* RootFile::instance_ = NULL;
+RootFile* RootFile::instance_ = nullptr;
 
 RootFile* RootFile::Instance() {
     if(!instance_) {
@@ -59,7 +59,7 @@ void RootFile::WriteToFile() {
     auto *cal = Calibrations::Instance();
     TString output_file = Form("%sHistograms.root", cal->GetOutputFileName().c_str());
 
-    TFile *out = new TFile(output_file, "recreate");
+    auto *out = new TFile(output_file, "recreate");
 
     h_light_angle_cm_->Write();
     h_light_angle_cm_dist_->Write();

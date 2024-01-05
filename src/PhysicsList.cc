@@ -44,33 +44,32 @@ PhysicsList::PhysicsList() : G4VModularPhysicsList() {
     // RegisterPhysics(new G4IonPhysics(verb));
 
     // Gamma-Nuclear Physics
-    G4EmExtraPhysics* gnuc = new G4EmExtraPhysics(verb);
+    auto* gnuc = new G4EmExtraPhysics(verb);
     // gnuc->ElectroNuclear(false);
     gnuc->MuonNuclear(false);
     RegisterPhysics(gnuc);
 }
 
-PhysicsList::~PhysicsList() {
-}
+PhysicsList::~PhysicsList() = default;
 
 void PhysicsList::ConstructParticle() {
-    G4BosonConstructor  pBosonConstructor;
-    pBosonConstructor.ConstructParticle();
+    G4BosonConstructor  boson_constructor;
+    boson_constructor.ConstructParticle();
 
-    G4LeptonConstructor pLeptonConstructor;
-    pLeptonConstructor.ConstructParticle();
+    G4LeptonConstructor lepton_constructor;
+    lepton_constructor.ConstructParticle();
 
-    G4MesonConstructor pMesonConstructor;
-    pMesonConstructor.ConstructParticle();
+    G4MesonConstructor meson_constructor;
+    meson_constructor.ConstructParticle();
 
-    G4BaryonConstructor pBaryonConstructor;
-    pBaryonConstructor.ConstructParticle();
+    G4BaryonConstructor baryon_constructor;
+    baryon_constructor.ConstructParticle();
 
-    G4IonConstructor pIonConstructor;
-    pIonConstructor.ConstructParticle();
+    G4IonConstructor ion_constructor;
+    ion_constructor.ConstructParticle();
 
-    G4ShortLivedConstructor pShortLivedConstructor;
-    pShortLivedConstructor.ConstructParticle();
+    G4ShortLivedConstructor short_lived_constructor;
+    short_lived_constructor.ConstructParticle();
 }
 
 void PhysicsList::SetCuts() {

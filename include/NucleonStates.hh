@@ -1,5 +1,4 @@
-#ifndef NucleonStates_h
-#define NucleonStates_h
+#pragma once
 
 #include <cmath>
 #include <cstdio>
@@ -34,5 +33,3 @@ private:
 
  	std::map<uint, std::map<uint, isotope_struct> > nucleons_;
 };
-
-#endif

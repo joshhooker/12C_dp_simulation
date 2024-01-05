@@ -1,5 +1,4 @@
-#ifndef ActionInitialization_h
-#define ActionInitialization_h
+#pragma once
 
 #include <cstdio>
 #include <map>
@@ -24,7 +23,5 @@ public:
     virtual void Build() const;
 
 private:
-    DetectorConstruction* detector_;
+    DetectorConstruction* detector_ { nullptr };
 };
-
-#endif

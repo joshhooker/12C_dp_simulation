@@ -1,5 +1,4 @@
-#ifndef BinaryReactionProcess_h
-#define BinaryReactionProcess_h
+#pragma once
 
 #include <cmath>
 
@@ -13,7 +12,6 @@
 #include <G4UserEventAction.hh>
 #include <Randomize.hh>
 
-#include "Analysis.hh"
 #include "Calibrations.hh"
 #include "DetectorConstruction.hh"
 #include "NucleonStates.hh"
@@ -34,8 +32,8 @@ public:
   	void StartTracking(G4Track*);
 
 private:
-    G4double scattering_energy_;
- 	G4double scattering_length_;
+    G4double scattering_energy_ { 0. };
+ 	G4double scattering_length_ { 0. };
 
     uniform_angle_output UniformCMAngle(uniform_angle_input input);
     uniform_angle_output UniformLabAngle(uniform_angle_input input);
@@ -43,5 +41,3 @@ private:
 
     G4double Lorentzian_shoot(G4double mean, G4double gamma);
 };
-
-#endif

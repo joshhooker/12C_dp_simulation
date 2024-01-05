@@ -1,5 +1,4 @@
-#ifndef PhysicsList_hh
-#define PhysicsList_hh
+#pragma once
 
 #include <G4DecayPhysics.hh>
 // #include <G4DeexPrecoParameters.hh>
@@ -50,5 +49,3 @@ protected:
     virtual void ConstructParticle();
     virtual void SetCuts();
 };
-
-#endif

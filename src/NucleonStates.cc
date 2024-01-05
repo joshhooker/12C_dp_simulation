@@ -101,7 +101,7 @@ void NucleonStates::ReadJSON() {
 
         // Get total probability of all the states
         G4double totalProbability = 0.;
-        for (auto state: states) {
+        for (const auto& state: states) {
             totalProbability += state.probability;
         }
 
@@ -187,10 +187,10 @@ void NucleonStates::ReadJSON() {
     }
 
     printf("Printing nuclear table to use:\n");
-    for (auto isotope: isotopes) {
+    for (const auto& isotope: isotopes) {
         printf("Name: %5s; Z: %3d; A: %3d\n", isotope.name.c_str(), isotope.charge, isotope.mass);
         printf("\t States:\n");
-        for (auto state: isotope.states) {
+        for (const auto& state: isotope.states) {
             printf("\t\tEnergy: %7.3f; Width: %7.3f; Input Prob.: %6.3f;  Cumul. Prob: %6.3f", state.energy, state.width, state.probability, state.cumulative_probability);
             if (state.use_angle) printf("; Angular file: %s", state.angle_file.c_str());
             printf("\t\t\n");

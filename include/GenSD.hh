@@ -1,5 +1,4 @@
-#ifndef GenSD_h
-#define GenSD_h
+#pragma once
 
 #include <G4SDManager.hh>
 #include <G4SystemOfUnits.hh>
@@ -18,8 +17,6 @@ public:
  	virtual G4bool ProcessHits(G4Step* aStep, G4TouchableHistory* ROhist);
 
 private:
- 	GenHitsCollection* hits_collection_;
- 	G4int hcid_;
+ 	GenHitsCollection* hits_collection_ { nullptr };
+ 	G4int hcid_ { 0 };
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef RootFile_h
-#define RootFile_h
+#pragma once
 
 #include <cassert>
 #include <cstring>
@@ -19,7 +18,7 @@
 
 class RootFile {
 public:
-    RootFile() {};
+    RootFile() = default;
     static RootFile* Instance();
 
     void Initialize();
@@ -66,43 +65,41 @@ public:
 private:
     static RootFile* instance_;
 
-    TH1F* h_light_angle_cm_;
-    TH1F* h_light_angle_cm_dist_;
-    TH1F* h_light_angle_theta_lab_;
-    TH1F* h_light_angle_theta_lab_dist_;
-    TH1F* h_light_angle_phi_lab_;
-    TH1F* h_light_angle_phi_lab_dist_;
-    TH1F* h_light_energy_;
-    TH1F* h_energy_;
-    TH1F* h_vertex_z_;
+    TH1F* h_light_angle_cm_ { nullptr };
+    TH1F* h_light_angle_cm_dist_ { nullptr };
+    TH1F* h_light_angle_theta_lab_ { nullptr };
+    TH1F* h_light_angle_theta_lab_dist_ { nullptr };
+    TH1F* h_light_angle_phi_lab_ { nullptr };
+    TH1F* h_light_angle_phi_lab_dist_ { nullptr };
+    TH1F* h_light_energy_ { nullptr };
+    TH1F* h_energy_ { nullptr };
+    TH1F* h_vertex_z_ { nullptr };
 
-    TH1F* h_excitation_energy_;
-    TH1F* h_excitation_energy_dist_;
-    TH1F* h_qvalue_;
-    TH1F* h_qvalue_dist_;
-    TH1F* h_calc_qvalue_;
-    TH1F* h_calc_qvalue_background_;
-    TH1F* h_calc_qvalue_states_;
-    TH1F* h_calc_qvalue_full_;
-    TH1F* h_qvalue_diff_;
+    TH1F* h_excitation_energy_ { nullptr };
+    TH1F* h_excitation_energy_dist_ { nullptr };
+    TH1F* h_qvalue_ { nullptr };
+    TH1F* h_qvalue_dist_ { nullptr };
+    TH1F* h_calc_qvalue_ { nullptr };
+    TH1F* h_calc_qvalue_background_ { nullptr };
+    TH1F* h_calc_qvalue_states_ { nullptr };
+    TH1F* h_calc_qvalue_full_ { nullptr };
+    TH1F* h_qvalue_diff_ { nullptr };
 
-    TH1F* h_calc_qvalue_07_;
-    TH1F* h_calc_qvalue_815_;
+    TH1F* h_calc_qvalue_07_ { nullptr };
+    TH1F* h_calc_qvalue_815_ { nullptr };
 
-    TH1F* h_proton_energy_error_;
-    TH1F* h_proton_angle_error_;
-    TH1F* h_beam_energy_error_;
-    TH1F* h_qvalue_error_;
+    TH1F* h_proton_energy_error_ { nullptr };
+    TH1F* h_proton_angle_error_ { nullptr };
+    TH1F* h_beam_energy_error_ { nullptr };
+    TH1F* h_qvalue_error_ { nullptr };
 
-    TH1F* h_sd1_energy_;
-    TH1F* h_sd2_energy_;
-    TH1F* h_sd_total_energy_;
+    TH1F* h_sd1_energy_ { nullptr };
+    TH1F* h_sd2_energy_ { nullptr };
+    TH1F* h_sd_total_energy_ { nullptr };
 
-    TH1F* h_angular_lab_state_[10];
-    TH1F* h_angular_lab_state_dist_[10];
-    TH1F* h_calc_qvalue_state_[10];
+    TH1F* h_angular_lab_state_[10] { nullptr };
+    TH1F* h_angular_lab_state_dist_[10] { nullptr };
+    TH1F* h_calc_qvalue_state_[10] { nullptr };
 
-    TH2F* h_qvalue_vertex_;
+    TH2F* h_qvalue_vertex_ { nullptr };
 };
-
-#endif

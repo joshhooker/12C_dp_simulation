@@ -1,6 +1,6 @@
-# 12Be(d, p) Simulation of IRIS
+# 12C(d, p) Simulation of IRIS
 
-GEANT4 Simulation for the 12Be(d, p) reaction with IRIS
+GEANT4 Simulation for the 12C(d, p) reaction with IRIS
 
 ## Getting Started
 
@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your mac
 Required Packages:
 
 ```
-GEANT4
+GEANT4 (Working on v11.1)
 ROOT
 CMake
 ```
@@ -59,7 +59,7 @@ The current example config.json file looks like this:
   "interactive"      : false,
   "macroName"        : "run.mac",
   "outputFile"       : "sim",
-  "beamIon[Z,A]"     : [4, 12],
+  "beamIon[Z,A]"     : [6, 12],
   "targetIon[Z,A]"   : [1, 2],
   "ejectileIon[Z,A]" : [1, 1],
   "beamEnergy"       : 112.75,
