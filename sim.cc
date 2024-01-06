@@ -5,6 +5,7 @@
 #include <G4RadioactiveDecayPhysics.hh>
 #include <G4RunManager.hh>
 #include <G4StepLimiterPhysics.hh>
+#include <G4UIExecutive.hh>
 #include <G4UImanager.hh>
 #include <G4VisExecutive.hh>
 #include <G4VModularPhysicsList.hh>
@@ -45,7 +46,7 @@ int main(int argc,char** argv) {
     }
 
     // Get the pointer to the User Interface manager
-    G4UImanager* UImanager = G4UImanager::GetUIpointer();
+    G4UImanager* ui_manager = G4UImanager::GetUIpointer();
 
     // Create and read json config
     Json::Value config;
@@ -123,27 +124,17 @@ int main(int argc,char** argv) {
     G4VisManager* vis_manager = new G4VisExecutive("Quiet");
     vis_manager->Initialize();
 
-    if(!is_interactive) {
-        // execute an argument macro file if exists
+    if (!is_interactive) {
+        // Batch mode
         G4String command = "/control/execute ";
-        G4String filename = macro_name;
-        UImanager->ApplyCommand(command + filename);
+        ui_manager->ApplyCommand(command + macro_name);
     }
     else {
-        // start interactive session
-#ifdef G4UI_USE
+        // Interactive mode
         G4UIExecutive* ui = new G4UIExecutive(argc, argv);
-#ifdef G4VIS_USE
-        UImanager->ApplyCommand("/control/execute init_vis.mac");
-#else
-        UImanager->ApplyCommand("/control/execute init.mac");
-#endif
-        if(ui->IsGUI()) {
-            UImanager->ApplyCommand("/control/execute gui.mac");
-            ui->SessionStart();
-            delete ui;
-        }
-#endif
+        ui_manager->ApplyCommand("/control/execute init_vis.mac");
+        ui->SessionStart();
+        delete ui;
     }
 
     // Job termination
